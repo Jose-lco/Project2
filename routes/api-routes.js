@@ -1,8 +1,8 @@
-// Requiring our models and passport as we've configured it
+//Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
-
-module.exports = function(app) {
+const axios = require("axios");
+module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -13,7 +13,6 @@ module.exports = function(app) {
       id: req.user.id
     });
   });
-
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
@@ -29,13 +28,35 @@ module.exports = function(app) {
         res.status(401).json(err);
       });
   });
-
   // Route for logging user out
   app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
   });
-
+  app.get("/corona/:state", (req, res) => {
+    axios({
+      "method": "GET",
+      "url": "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats",
+      "headers": {
+        "content-type": "application/octet-stream",
+        "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
+        "x-rapidapi-key": "cf604b428amsh58cdac45c418cb0p1078cdjsn9be2d20413f7",
+        "useQueryString": true
+      }, "params": {
+        "country": "US"
+      }
+    })
+      .then((response) => {
+        console.log(response.data)
+        let stats =response.data.data.covid19Stats
+const result = stats.filter(province =>province.province === req.params.state)
+//const result = words.filter(word => word.length > 6);
+        res.json(result)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  });
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
