@@ -11,11 +11,15 @@ axios({
   },
   params: {
     locale: "en_US",
-    query: "Seattle"
+    query: "Boston"
   }
 })
   .then(response => {
-    console.log(response.data.suggestions[3]);
+    let hotelData = response.data.suggestions;
+    console.log(hotelData[0].entities[0].caption);
+    for (i = 0; i < hotelData[3].entities.length; i++) {
+      console.log(hotelData[3].entities[i].name)
+    }
   })
   .catch(error => {
     console.log(error);
