@@ -84,7 +84,7 @@
         <option value="WY">Wyoming</option>
       </select>
       <label>State:</label>
-      <select id="city">
+      <select id="city" class="materialSelect">
         <option value="" disabled selected>Choose your option</option>
       </select>
       <label>City:</label>
@@ -98,17 +98,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script>
       $(document).ready(function () {
+        // 1) setup listener for custom event to re-initialize on change
+
         $('.sidenav').sidenav();
-        $('select').formSelect();
+        $('#state').formSelect();
+        $('.materialSelect').formSelect();
+        $('.materialSelect').on('contentChanged', function() { $(this).formSelect() });
         $('#state').change(function () {
           let $option = $(this).find('option:selected').text();
-          console.log($option);
           $.get(`/corona/${$option}`, (data) => {
-            console.log(data);
             $.each(data, (index, value) => {
-              console.log(value);
-              $('#city').append($('<option value="test"> Josephine </option>') )
+              $('#city').append($(`<option value="${value.city}"> ${value.city} </option>`))
             })
+            $('#city').trigger('contentChanged');
           })
         });
       });
