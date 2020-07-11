@@ -13,7 +13,7 @@
   <div class="navbar-fixed">
     <nav class="nav-wrapper indigo">
       <div class="container">
-        <a href="#" class="brand-logo">Trip Safely</a>
+        <a href="members.html" class="brand-logo">Trip Safely</a>
         <a href="#" class="sidenav-trigger" data-target="mobile-links">
           <i class="material-icons">menu</i>
         </a>
@@ -30,7 +30,7 @@
   <div class="container">
     <div class="input-field col s12 l9">
       <select id="state">
-        <option value="" disabled selected>Choose your option</option>
+        <option value="" disabled selected>Choose your State</option>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -85,57 +85,61 @@
       </select>
       <label>State:</label>
       <select id="city" class="materialSelect">
-        <option value="" disabled selected>Choose your option</option>
+        <option value="" disabled selected>Choose your city</option>
       </select>
       <label>City:</label>
     </div>
-    <div class="container" id="corona-cards"> 
-    </div>
-    <ul class="sidenav" id="mobile-links">
-      <li><a href="">Home</a></li>
-      <li><a href="">About</a></li>
-      <li><a href="">Trips</a></li>
-    </ul>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        // 1) setup listener for custom event to re-initialize on change
+  </div>
+  <ul class="sidenav" id="mobile-links">
+    <li><a href="">Home</a></li>
+    <li><a href="">About</a></li>
+    <li><a href="">Trips</a></li>
+  </ul>
+  <div class="container" id="corona-cards">
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // 1) setup listener for custom event to re-initialize on change
 
-        $('.sidenav').sidenav();
-        $('#state').formSelect();
-        $('.materialSelect').formSelect();
-        $('.materialSelect').on('contentChanged', function () { $(this).formSelect() });
-        $('#state').change(function () {
-          let $option = $(this).find('option:selected').text();
-          $.get(`/corona/${$option}`, (data) => {
-            $.each(data, (index, value) => {
-              $('#city').append($(`<option value="${value.city}"> ${value.city} </option>`))
-            })
-            $('#city').trigger('contentChanged');
-            $('#city').change(function () {
-              let option = $(this).find('option:selected').text();
-              console.log(option);
-              $('corona-card').append(`<div class="row">
+      $('.sidenav').sidenav();
+      $('#state').formSelect();
+      $('.materialSelect').formSelect();
+      $('.materialSelect').on('contentChanged', function () { $(this).formSelect() });
+      $('#state').change(function () {
+        let $option = $(this).find('option:selected').text();
+        $.get(`/corona/${$option}`, (data) => {
+          $.each(data, (index, value) => {
+            $('#city').append($(`<option value="${value.city}"> ${value.city} </option>`))
+          })
+          $('#city').trigger('contentChanged');
+          $('#city').change(function () {
+            let option = $(this).find('option:selected').text().trim();
+            let cityData = data.filter(place => place.city === option);
+            $('#corona-cards').append($(`<div class="row">
       <div class="col s12 l6">
         <div class="card">
           <div class="card-image">
-            <img src="img/curry.jpg" alt="">
+            <img src="" alt="">
             <a href="" class="halfway-fab btn-floating pink pulse">
               <i class="material-icons">favorite</i>
             </a>
           </div>
           <div class="card-content">
-            <span class="card-title">${option},${$option}</span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis aliquam orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            <span class="card-title">${option}, ${$option}</span>
+            <p>Confirmed Cases: ${cityData[0].confirmed}</p>
+            <p>Confirmed Deaths: ${cityData[0].deaths}</p>
+            <p>Last Updated: ${cityData[0].lastUpdate}</p>
           </div>
         </div>
-      </div>`)
-            })
+      </div>`))
           })
-        });
+        })
       });
-    </script>
+    });
+  </script>
 </body>
 
 </html>

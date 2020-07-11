@@ -26,12 +26,14 @@
         </nav>
       </div>
     <div class="container">
+        <br>
         <div class="row">
+          <h4>Enter the name of a city to find a hotel:</h2>
             <form class="col s12">
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="textarea1" class="materialize-textarea" id="cityInput"></textarea>
-                  <label for="textarea1">Enter city, state, or county</label>
+                  <textarea id="cityInput" class="materialize-textarea"></textarea>
+                  <label for="textarea1"></label>
                 </div>
                 <br>
                 <a class="waves-effect waves-light btn-large" id="searchHotelBtn">Search</a>
@@ -40,10 +42,11 @@
           </div>
           <div class="row">
               <section id="hotelHolder">
-                  <h3 id="hotelLocation"></h3>
-                  <ul id="hotels"></ul>
+                  
               </section>
           </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hotel.js"></script>
 </body>
 </html>
