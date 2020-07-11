@@ -2,7 +2,7 @@
 const db = require("../models");
 const passport = require("../config/passport");
 const axios = require("axios");
-module.exports = function (app) {
+module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -35,21 +35,24 @@ module.exports = function (app) {
   });
   app.get("/corona/:state", (req, res) => {
     axios({
-      "method": "GET",
-      "url": "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats",
-      "headers": {
+      method: "GET",
+      url: "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats",
+      headers: {
         "content-type": "application/octet-stream",
         "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
         "x-rapidapi-key": "cf604b428amsh58cdac45c418cb0p1078cdjsn9be2d20413f7",
-        "useQueryString": true
-      }, "params": {
-        "country": "US"
+        useQueryString: true
+      },
+      params: {
+        country: "US"
       }
     })
-      .then((response) => {
+      .then(response => {
         console.log(response.data)
-        let stats =response.data.data.covid19Stats
-const result = stats.filter(province =>province.province === req.params.state)
+        let stats = response.data.data.covid19Stats;
+        const result = stats.filter(
+          province => province.province === req.params.state
+        );
 //const result = words.filter(word => word.length > 6);
 
 //app.get("/corona", function(req, res) {
@@ -57,7 +60,7 @@ const result = stats.filter(province =>province.province === req.params.state)
         res.json(result)
 //})
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   });
@@ -78,9 +81,9 @@ const result = stats.filter(province =>province.province === req.params.state)
   })
     .then(response => {
       let hotelData = response.data.suggestions;
-      console.log(hotelData[0].entities[0].caption);
-      for (i = 0; i < hotelData[3].entities.length; i++) {
-        console.log(hotelData[3].entities[i].name)
+      console.log(response.data.suggestions[0].entities[0].caption);
+      for (i = 0; i < response.data.suggestions[3].entities.length; i++) {
+        console.log(response.data.suggestions[3].entities[i].name)
       }
     })
     .catch(error => {
