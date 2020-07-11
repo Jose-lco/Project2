@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Hotels</title>
 </head>
 <body>
-    
+    <div class="navbar-fixed">
+        <nav class="nav-wrapper indigo">
+          <div class="container">
+            <a href="#" class="brand-logo">Trip Safely</a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+              <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+              <li><a href="hotels.html">Hotels</a></li>
+              <li><a href="attractions.html">Things to do</a></li>
+              <li><a href="rentals.html">Vacation Rentals</a></li>
+              <li><a href="members.html">Trips</a></li>
+              <li><a href="login.html" class="btn white indigo-text">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    <div class="container">
+        <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="textarea1" class="materialize-textarea" id="cityInput"></textarea>
+                  <label for="textarea1">Enter city, state, or county</label>
+                </div>
+                <br>
+                <a class="waves-effect waves-light btn-large" id="searchHotelBtn">Search</a>
+              </div>
+            </form>
+          </div>
+          <div class="row">
+              <section id="hotelHolder">
+                  <h3 id="hotelLocation"></h3>
+                  <ul id="hotels"></ul>
+              </section>
+          </div>
+    </div>
 </body>
 </html>

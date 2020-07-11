@@ -51,12 +51,42 @@ module.exports = function (app) {
         let stats =response.data.data.covid19Stats
 const result = stats.filter(province =>province.province === req.params.state)
 //const result = words.filter(word => word.length > 6);
+
+//app.get("/corona", function(req, res) {
+  //res.render("members", { virus: corona });
         res.json(result)
+//})
       })
       .catch((error) => {
         console.log(error)
       })
   });
+  //app.get("/hotel/:s", (req, res) => {
+  axios({
+    method: "GET",
+    url: "https://hotels4.p.rapidapi.com/locations/search",
+    headers: {
+      //"content-type": "application/octet-stream",
+      "x-rapidapi-host": "hotels4.p.rapidapi.com",
+      "x-rapidapi-key": "afbc1de585mshda0ba0b375da6fep1ab69cjsn703c9596fdc7",
+      useQueryString: true
+    },
+    params: {
+      locale: "en_US",
+      query: "Seattle"
+    }
+  })
+    .then(response => {
+      let hotelData = response.data.suggestions;
+      console.log(hotelData[0].entities[0].caption);
+      for (i = 0; i < hotelData[3].entities.length; i++) {
+        console.log(hotelData[3].entities[i].name)
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
