@@ -1,7 +1,9 @@
 //Requiring our models and passport as we've configured it
 
+
 require('dotenv').config()
 var mykey = process.env.API_KEY;
+// var secretkey = config.SECRET_KEY;
 const db = require("../models");
 const passport = require("../config/passport");
 const axios = require("axios");
