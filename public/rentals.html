@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Trip Safe</title>
 </head>
+
 <body>
-    
+    <div id="top">
+        <div class="navbar-fixed">
+            <nav class="nav-wrapper indigo">
+                <div class="container">
+                    <a href="members.html" class="brand-logo">Trip Safe</a>
+                    <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="hotels.html">Hotels</a></li>
+                        <li><a href="attractions.html">Things to do</a></li>
+                        <li><a href="rentals.html">Vacation Rentals</a></li>
+                        <li><a href="members.html">Trips</a></li>
+                        <li><a href="login.html" class="btn white indigo-text">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <ul class="sidenav" id="mobile-links">
+            <li><a href="hotels.html">Hotels</a></li>
+            <li><a href="attractions.html">Things to do</a></li>
+            <li><a href="rentals.html">Vacation Rentals</a></li>
+            <li><a href="members.html">Trips</a></li>
+            <li><a href="login.html" class="btn white indigo-text">Logout</a></li>
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.sidenav').sidenav();
+            $('#state').formSelect();
+        })
+    </script>
 </body>
+
 </html>
